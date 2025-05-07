@@ -61,7 +61,7 @@ class IGPSportClient:
         }
         
         try:
-            response = self.session.post(url, headers=headers, json=data)
+            response = self.session.post(url, json=data)
             response.raise_for_status()
             result = response.json()
             
