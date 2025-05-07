@@ -14,6 +14,7 @@ import datetime
 import requests
 import tempfile
 import garth
+import uuid
 from pathlib import Path
 import logging
 from dateutil.parser import parse
@@ -46,7 +47,8 @@ class IGPSportClient:
             "accept": "application/json, text/plain, */*",
             "content-type": "application/json",
             "origin": "https://login.passport.igpsport.cn",
-            "referer": "https://login.passport.igpsport.cn/"
+            "referer": "https://login.passport.igpsport.cn/",
+            "clientId": str(uuid.uuid4())
         })
     
     def login(self) -> bool:
@@ -59,7 +61,7 @@ class IGPSportClient:
         }
         
         try:
-            response = self.session.post(url, json=data)
+            response = self.session.post(url, headers=headers, json=data)
             response.raise_for_status()
             result = response.json()
             
